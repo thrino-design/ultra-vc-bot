@@ -1,0 +1,6 @@
+pyrogram==2.0.106
+tgcrypto
+pytgcalls==2.0.6
+pytube
+youtube-search-python
+ffmpeg-python
