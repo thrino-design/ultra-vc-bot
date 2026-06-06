@@ -5,35 +5,39 @@ from youtubesearchpython import VideosSearch
 from pytube import YouTube
 
 # ======================
-# ENV
+# ENV VARIABLES (Render)
 # ======================
-API_ID = int(os.getenv("39845865"))
-API_HASH = os.getenv("adf15a3f5aa8103094fab17318f8a041")
-BOT_TOKEN = os.getenv("8996969044:AAFOE_8S4ISuL7ao_Gdu-MuSLe2a2riAY0Q")
+API_ID = int(os.getenv("API_ID"))
+API_HASH = os.getenv("API_HASH")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # ======================
 # CLIENT
 # ======================
 app = Client(
     "music-bot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=BOT_TOKEN
+    api_id=39845865,
+    api_hash=adf15a3f5aa8103094fab17318f8a041,
+    bot_token=8996969044:AAFOE_8S4ISuL7ao_Gdu-MuSLe2a2riAY0Q
 )
 
 # ======================
-# START
+# START COMMAND
 # ======================
 @app.on_message(filters.command("start"))
-async def start(_, message):
+async def start(client, message):
     await message.reply_text(
-        "🎧 𝗩𝗖 𝗠𝗨𝗦𝗜𝗖 𝗕𝗢𝗧\n"
+        "✨ 𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 𝗠𝘂𝘀𝗶𝗰 𝗩𝗖 𝗕𝗼𝘁 🎧\n"
         "━━━━━━━━━━━━━━\n"
         "🤖 Status: Online\n"
-        "🎵 /play <song name>\n"
-        "🔎 YouTube search enabled\n"
-        "━━━━━━━━━━━━━━"
+        "🎵 Use /play to stream music\n"
+        "⚡ Fast & stable VC support\n"
     )
+
+# ======================
+# RUN BOT
+# ======================
+
 
 # ======================
 # PLAY (DOWNLOAD AUDIO LINK)
