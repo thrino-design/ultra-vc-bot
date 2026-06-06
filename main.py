@@ -1,9 +1,11 @@
 import os
 import asyncio
 from collections import defaultdict, deque
+
 from pyrogram import Client, filters
-from py_tgcalls import PyTgCalls
-from py_tgcalls.types import AudioPiped
+from pytgcalls import PyTgCalls
+from pytgcalls.types.input_stream import AudioPiped
+
 from pytube import YouTube
 from youtubesearchpython import VideosSearch
 
