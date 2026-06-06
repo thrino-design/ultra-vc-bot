@@ -1,50 +1,42 @@
-import os
+k	mport os
 import asyncio
 from pyrogram import Client, filters
-from pytube import YouTube
 from youtubesearchpython import VideosSearch
+from pytube import YouTube
 
 # ======================
-# ENV VARIABLES
+# ENV
 # ======================
-API_ID = int(os.getenv("API_ID"))
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+API_ID = int(os.getenv("39845865"))
+API_HASH = os.getenv("adf15a3f5aa8103094fab17318f8a041")
+BOT_TOKEN = os.getenv("8996969044:AAFOE_8S4ISuL7ao_Gdu-MuSLe2a2riAY0Q")
 
 # ======================
 # CLIENT
 # ======================
 app = Client(
-    "vc-bot",
-    api_id=39845865,
-    api_hash=adf15a3f5aa8103094fab17318f8a041,
-    bot_token=8996969044:AAFOE_8S4ISuL7ao_Gdu-MuSLe2a2riAY0Q
+    "music-bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN
 )
 
 # ======================
-# PYTGCALLS
-# ======================
-from pytgcalls import PyTgCalls
-from pytgcalls.types.input_stream import AudioPiped
-
-call = PyTgCalls(app)
-
-# ======================
-# START COMMAND
+# START
 # ======================
 @app.on_message(filters.command("start"))
 async def start(_, message):
     await message.reply_text(
-        "✨ 𝗩𝗖 𝗠𝗨𝗦𝗜𝗖 𝗕𝗢𝗧 🎧\n"
+        "🎧 𝗩𝗖 𝗠𝗨𝗦𝗜𝗖 𝗕𝗢𝗧\n"
         "━━━━━━━━━━━━━━\n"
         "🤖 Status: Online\n"
         "🎵 /play <song name>\n"
-        "⚡ Voice Chat Streaming\n"
+        "🔎 YouTube search enabled\n"
         "━━━━━━━━━━━━━━"
     )
 
 # ======================
-# PLAY COMMAND
+# PLAY (DOWNLOAD AUDIO LINK)
 # ======================
 @app.on_message(filters.command("play"))
 async def play(_, message):
@@ -55,35 +47,30 @@ async def play(_, message):
 
     msg = await message.reply_text("🔎 Searching...")
 
-    search = VideosSearch(query, limit=1).result()["result"]
-    if not search:
-        return await msg.edit("❌ No results found!")
-
-    url = search[0]["link"]
-    title = search[0]["title"]
-
-    await msg.edit(f"🎵 Downloading: {title}")
-
-    yt = YouTube(url)
-    stream_url = yt.streams.filter(only_audio=True).first().url
-
-    await msg.edit("🎧 Joining voice chat...")
-
     try:
-        await call.join_group_call(
-            message.chat.id,
-            AudioPiped(stream_url)
+        search = VideosSearch(query, limit=1).result()["result"]
+        if not search:
+            return await msg.edit("❌ No results found!")
+
+        url = search[0]["link"]
+        title = search[0]["title"]
+
+        await msg.edit(f"🎵 Found:\n{title}\n\n⬇️ Getting audio...")
+
+        yt = YouTube(url)
+        stream_url = yt.streams.filter(only_audio=True).first().url
+
+        await msg.edit(
+            "⚠️ VC streaming removed (safe version)\n\n"
+            f"🎶 Song Ready:\n{title}\n\n"
+            "👉 You can upgrade to full VC version later"
         )
-        await msg.edit(f"✅ Now Playing:\n🎶 {title}")
+
     except Exception as e:
         await msg.edit(f"❌ Error:\n{e}")
 
 # ======================
-# START BOT
+# RUN
 # ======================
-app.start()
-call.start()
-
-print("🔥 VC Bot is running...")
-idle = asyncio.get_event_loop()
-idle.run_forever()
+print("🔥 Bot Started")
+app.run()
